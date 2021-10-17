@@ -8,13 +8,16 @@ const getSearch = ()=>{
 
 const displayItems = items =>{
     const foodList = items.meals;
+    const details = document.getElementById('meal-details')
+    details.innerHTML = '';
     const cardArea = document.getElementById('cards');
     cardArea.innerHTML = '';
     if (foodList == null) {
+    const inputValue = document.getElementById('search-box').value;
        const cardArea = document.getElementById('cards');
        cardArea.innerHTML =`
         <div class="no-meal">
-            <h2>Sorry! No meal found..!</h2>
+            <h2>Sorry! No meal found for '${inputValue}'..!</h2>
             <i class="far fa-frown-open fa-3x"></i><br>
             <small>
                 Make sure that all words are spelled correctly.
@@ -37,17 +40,18 @@ const displayItems = items =>{
     }
 };
 
+
 const getMealDetails = mealID =>{
     const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`
     fetch(url)
     .then(res => res.json())
     .then(data => showMealDetails(data.meals[0]))
-}
+};
 
 
 const showMealDetails = (mealDetails) =>{
-    const mainArea = document.querySelector('.main-content');
-    mainArea.innerHTML = '';
+    const details = document.getElementById('meal-details')
+    details.innerHTML = '';
     const div = document.createElement('div');
     div.className = 'details-area'
     div.innerHTML =`
@@ -63,5 +67,5 @@ const showMealDetails = (mealDetails) =>{
             <li><i class="fas fa-check"></i>&nbsp ${mealDetails.strIngredient6}</li>
         </ul>
     `
-    mainArea.appendChild(div);
-}
+    details.appendChild(div);
+};
